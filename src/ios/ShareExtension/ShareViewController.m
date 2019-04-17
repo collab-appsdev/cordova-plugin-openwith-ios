@@ -152,12 +152,9 @@
 }
 - (void) viewDidAppear:(BOOL)animated {
     [self.view endEditing:YES];
-}
-
-- (void) viewDidLoad {
     [self setup];
-    [self debug:@"[viewDidLoad]"];
-
+    [self debug:@"[viewDidAppear]"];
+    
     BOOL isLoggedIn = [self.userDefaults boolForKey:@"loggedIn"];
 
     if (!isLoggedIn) {
