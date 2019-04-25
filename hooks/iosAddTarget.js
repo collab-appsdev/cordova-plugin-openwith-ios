@@ -301,7 +301,7 @@ module.exports = function (context) {
     //   log('Successfully added frameworks needed by the share extension!', 'info');
     // }
 
-    Add build settings for Swift support, bridging header and xcconfig files
+    // Add build settings for Swift support, bridging header and xcconfig files
     var configurations = pbxProject.pbxXCBuildConfigurationSection();
     for (var key in configurations) {
       if (typeof configurations[key].buildSettings !== 'undefined') {
