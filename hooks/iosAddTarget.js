@@ -304,19 +304,24 @@ module.exports = function (context) {
     // Add build settings for Swift support, bridging header and xcconfig files
     var configurations = pbxProject.pbxXCBuildConfigurationSection();
     for (var key in configurations) {
+      console.log("testjorlan");
       if (typeof configurations[key].buildSettings !== 'undefined') {
-        var buildSettingsObj = configurations[key].buildSettings;
+          console.log("testjorlan1");
+          var buildSettingsObj = configurations[key].buildSettings;
         if (typeof buildSettingsObj['PRODUCT_NAME'] !== 'undefined') {
           var productName = buildSettingsObj['PRODUCT_NAME'];
           if (productName.indexOf('ShareExtension') >= 0) {
-            if (addXcconfig) {
+            console.log("testjorlan2");
+              if (addXcconfig) {
               configurations[key].baseConfigurationReference =
                 xcconfigReference + ' /* ' + xcconfigFileName + ' */';
-              log('Added xcconfig file reference to build settings!', 'info');
+              console.log('Added xcconfig file reference to build settings!', 'info');
             }
+              console.log("testjorlan3");
             if (addEntitlementsFile) {
+                console.log("testjorlan4");
               buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] = '"' + 'ShareExtension' + '/' + entitlementsFileName + '"';
-              log('Added entitlements file reference to build settings!', 'info');
+              console.log('Added entitlements file reference to build settings!', 'info');
             }
           }
         }
