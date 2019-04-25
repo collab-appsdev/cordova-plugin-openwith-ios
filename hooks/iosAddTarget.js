@@ -304,28 +304,40 @@ module.exports = function (context) {
     // Add build settings for Swift support, bridging header and xcconfig files
     var configurations = pbxProject.pbxXCBuildConfigurationSection();
     for (var key in configurations) {
-      console.log("testjorlan");
-      if (typeof configurations[key].buildSettings !== 'undefined') {
-          console.log("testjorlan1");
-          var buildSettingsObj = configurations[key].buildSettings;
-        if (typeof buildSettingsObj['PRODUCT_NAME'] !== 'undefined') {
-          var productName = buildSettingsObj['PRODUCT_NAME'];
-          if (productName.indexOf('ShareExtension') >= 0) {
-            console.log("testjorlan2");
-              if (addXcconfig) {
-              configurations[key].baseConfigurationReference =
-                xcconfigReference + ' /* ' + xcconfigFileName + ' */';
-              console.log('Added xcconfig file reference to build settings!', 'info');
+        if (typeof configurations[key].buildSettings !== 'undefined') {
+            var buildSettingsObj = configurations[key].buildSettings;
+            if (typeof buildSettingsObj['PRODUCT_NAME'] !== 'undefined') {
+                var productName = buildSettingsObj['PRODUCT_NAME'];
+                if (productName.indexOf('ShareExtension') >= 0) {
+                    if (addXcconfig) {
+                        configurations[key].baseConfigurationReference =
+                            xcconfigReference + ' /* ' + xcconfigFileName + ' */';
+                        log('Added xcconfig file reference to build settings!', 'info');
+                    }
+                    if (addEntitlementsFile) {
+                        buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] = '"' + 'ShareExtension' + '/' + entitlementsFileName + '"';
+                        log('Added entitlements file reference to build settings!', 'info');
+                    }
+                }
             }
-              console.log("testjorlan3");
-            if (addEntitlementsFile) {
-                console.log("testjorlan4");
-              buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] = '"' + 'ShareExtension' + '/' + entitlementsFileName + '"';
-              console.log('Added entitlements file reference to build settings!', 'info');
+            if ((buildSettingsObj['PRODUCT_NAME'].toString().toLowerCase() == 'ShareExtension') || (buildSettingsObj['PRODUCT_NAME'].toString().toLowerCase() == 'ShareExt')) {
+                if (typeof buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] !== 'undefined') {
+                    buildSettingsObj['CODE_SIGN_ENTITLEMENTS'] = '"' + 'ShareExtension' + '/' + entitlementsFileName + '"';
+                }
+                if (typeof buildSettingsObj['CODE_SIGN_STYLE'] !== 'undefined') {
+                    buildSettingsObj['CODE_SIGN_STYLE'] = 'Manual';
+                }
+                if (typeof buildSettingsObj['DEVELOPMENT_TEAM'] !== 'undefined') {
+                    buildSettingsObj['DEVELOPMENT_TEAM'] = 'WAKAKEK';
+                }
+                if (typeof buildSettingsObj['PROVISIONING_PROFILE'] !== 'undefined') {
+                    buildSettingsObj['PROVISIONING_PROFILE'] = 'd492d9cb-4000-5g55-90s5-45331cgfd1e1';
+                }
+                if (typeof buildSettingsObj['PROVISIONING_PROFILE_SPECIFIER'] !== 'undefined') {
+                    buildSettingsObj['PROVISIONING_PROFILE_SPECIFIER'] = 'shareextension';
+                }
             }
-          }
         }
-      }
     }
 
     // Write the modified project back to disc
