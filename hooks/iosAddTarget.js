@@ -113,7 +113,7 @@ function getCordovaParameter(configXml, variableName) {
 // }
 
 function parsePbxProject(context, pbxProjectPath) {
-  var xcode = context.requireCordovaModule('xcode');
+  var xcode = require('xcode');
   console.log('    Parsing existing project at location: ' + pbxProjectPath + '...');
   var pbxProject;
   if (context.opts.cordova.project) {
