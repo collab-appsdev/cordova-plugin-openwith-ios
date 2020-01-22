@@ -202,7 +202,7 @@ console.log('Adding target "' + PLUGIN_ID + '/ShareExtension" to XCode project')
 
 module.exports = function (context) {
 
-  var Q = context.requireCordovaModule('q');
+  var Q = require('q');
   var deferral = new Q.defer();
 
   // if (context.opts.cordova.platforms.indexOf('ios') < 0) {
